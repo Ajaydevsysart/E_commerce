@@ -12,7 +12,8 @@ db.connect((err)=>{
     else  console.log("db connected to port 27017");
 })
 
-
+app.use(express.json())
+app.use(express.urlencoded())
 // Access public folder from root
 app.use("/public", express.static("public"));
 app.get("/layouts/", function(req, res) {
