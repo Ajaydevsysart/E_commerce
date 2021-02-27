@@ -28,7 +28,10 @@ router.post('/signup',(req,res)=>{
     userHelpers.doSignup(req.body).then((response)=>{
         console.log(response)
     })
-
+res.render('user/login',{admin:false})
 })
+
+//signup post test============================
+
 
 module.exports = router;
