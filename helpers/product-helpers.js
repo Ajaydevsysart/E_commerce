@@ -1,5 +1,7 @@
 const db=require('../config/connection')
-const collection=require('../config/collections')
+const collection=require('../config/collections');
+const { reject } = require('bcrypt/promises');
+const delet=require('mongodb').ObjectID
 module.exports={
 
     addProduct:(product,callback)=>{
@@ -15,5 +17,12 @@ module.exports={
             resolve(products)
         })
 
+    },
+    deleteProduct:(proId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.PRODUCT_COLLECTION).removeOne({_id:delet(proId)}).then((response)=>{
+                resolve(response)
+            })
+        })
     }
 }
