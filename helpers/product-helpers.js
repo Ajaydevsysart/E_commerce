@@ -1,7 +1,8 @@
 const db=require('../config/connection')
 const collection=require('../config/collections');
-const { reject } = require('bcrypt/promises');
-const delet=require('mongodb').ObjectID
+const { reject, promise } = require('bcrypt/promises');
+const delet=require('mongodb').ObjectID;
+const { response } = require('express');
 module.exports={
 
     addProduct:(product,callback)=>{
@@ -24,5 +25,28 @@ module.exports={
                 resolve(response)
             })
         })
+    },
+    getProductDetails:(proId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:delet(proId)}).then((product)=>{
+                resolve(product)
+            })
+        })
+    },
+    updateProduct:(proId,proDetails)=>{
+      return new Promise((resolve,reject)=>{
+         db.get().collection(collection.PRODUCT_COLLECTION)
+         .updateOne({_id:delet(proId)},{
+             $set:{
+                 Name:proDetails.Name,
+                 description:proDetails.description,
+                 catagory:proDetails.category,
+                 price:proDetails.price,
+                 
+             }
+         }).then((response)=>{
+             resolve()
+         })
+      })  
     }
 }

@@ -47,5 +47,25 @@ router.get('/deleteproduct/:id',(req,res)=>{
 
 })
 
+//edit page
+router.get('/edit-product/:id',async(req,res)=>{
+    let product=await producthelper.getProductDetails(req.params.id)
+    console.log(product)
+    res.render('admin/edit-product',{product,admin:true})
+})
+
+//edit product post catagory error
+router.post('/edit-product/:id',(req,res)=>{
+    let id=req.params.id
+    producthelper.updateProduct(req.params.id,req.body).then(()=>{
+        res.redirect('/admin')
+        if(req.files.image){
+            let image=req.files.image
+            image.mv('./public/images/product-images/'+id+'.jpg')
+
+        }
+    })
+})
+
 
 module.exports = router;

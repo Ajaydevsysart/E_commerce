@@ -14,6 +14,7 @@
                 <th scope="col">NO</th>
                 <th scope="col">name</th>
                 <th scope="col">Catagory</th>
+                <th scope="col">Price</th>
                 <th scope="col">disription</th>
                 <th scope="col">Image</th>
               </tr>
@@ -24,9 +25,10 @@
                 <th scope="row"><%=i+1%></th>
                 <td><%= products[i].Name%></td>
                 <td><%= products[i].category%></td>
+                <td><%= products[i].price%></td>
                 <td><%= products[i].description%></td>
                 <td><img style="width: 50px;height: 50px;" src="/public/images/product-images/<%= products[i]._id%>.jpg" alt=""></td>
-                <td><a href="/admin/edit-product" class="btn btn-primary">Edit</a></td>
+                <td><a href="/admin/edit-product/<%= products[i]._id%>" class="btn btn-primary">Edit</a></td>
                 <td><a href="/admin/deleteproduct/<%= products[i]._id%>"  class="btn btn-danger" onclick="return confirm('Are you want to delete <%= products[i].Name%>?')">Delete</a></td>
               </tr>
               

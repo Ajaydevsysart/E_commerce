@@ -17,7 +17,6 @@ const verifyLogin=(req,res,next)=>{
 //home route=================================
 router.get('/', (req, res) => {
     let user=req.session.user
-    console.log(user)
     producthelper.getAllProducts().then((products) => {
         res.render("user/view-products", {products,user,admin: false })
         
@@ -39,7 +38,8 @@ router.get('/login',(req,res)=>{
 //signup get===================================
 
 router.get('/signup',(req,res)=>{
-    res.render('user/signup',{admin:false})
+    let user=req.session.user
+    res.render('user/signup',{user,admin:false})
 
 })
 
@@ -47,9 +47,13 @@ router.get('/signup',(req,res)=>{
 
 router.post('/signup',(req,res)=>{
     userHelpers.doSignup(req.body).then((response)=>{
+        let user=req.session.user
         console.log(response)
+        req.session.loggedIn=true
+        req.session.user=response
+        res.render('user/login',{"loginErr":req.session.loginErr,user,admin:false})
     })
-res.render('user/login',{admin:false})
+
 })
 
 //login post test============================
@@ -77,13 +81,20 @@ router.get('/logout',(req,res)=>{
 
 //cart =======================================
 
-router.get('/cart',verifyLogin,(req,rest)=>{
+router.get('/cart',verifyLogin,async(req,res)=>{
     let user=req.session.user
+    let products=await userHelpers.getCartProducts(req.session.user._id)
+    console.log(products)
     res.render("user/cart",{user,admin:false})
 })
 
 
-
+//ADD TO CART=================================
+router.get('/add-to-cart/:id',verifyLogin,(req,res)=>{
+    userHelpers.addToCart(req.params.id,req.session.user._id).then(()=>{
+        res.redirect('/')
+    })
+})
 
 
 
