@@ -14,7 +14,8 @@
               <p class="card-text">
                 <%= products[i].description%>
               </p>
-              <a href="/add-to-cart/<%= products[i]._id%>" class="btn btn-primary">Add to Cart</a>
+              
+              <button onclick="addToCart('<%= products[i]._id%>')" class="btn btn-primary">Add to Cart</button>
             </div>
           </div>
 
@@ -27,3 +28,7 @@
   </div>
   </div>
 </section>
+
+<script>
+
+</script>
