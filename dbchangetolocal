@@ -1,1 +1,6 @@
 const url='mongodb://localhost:27017'
+
+const url='mongodb+srv://sysart:Sysart@123@cluster0.eefgy.mongodb.net/shopping?retryWrites=true&w=majority'
+
+
+<a href="/add-to-cart/<%= products[i]._id%>" class="btn btn-primary">Add to Cart</a> 
