@@ -59,7 +59,7 @@ module.exports = {
                 console.log(proExist, "+++");
                 if (proExist!=-1) {
                     db.get().collection(collection.CART_COLLECTION)
-                    .updateOne({ 'products.item': delet(proId)},
+                    .updateOne({user:delet(userId),'products.item': delet(proId)},
                     {
                         $inc: { 'products.$.quantity': 1 }
                     }
@@ -109,11 +109,17 @@ module.exports = {
                         from:collection.PRODUCT_COLLECTION,
                         localField:'item',
                         foreignField:'_id',
-                        as:'products'
-                    }
+                        as:'product'
+                    },
+                    
+                },
+                {
+                   $project:{
+                       item:1,quantity:1,product:{$arrayElemAt:['$product',0]}
+                   } 
                 }
             ]).toArray()
-            console.log(cartItems[0].products)
+            console.log(cartItems[0].product)
             resolve(cartItems)
         })
     },
@@ -125,6 +131,19 @@ module.exports = {
                 count = cart.products.length
             }
             resolve(count)
+        })
+    },
+    changeProductQuantity:(details)=>{
+        details.count=parseInt(details.count)
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CART_COLLECTION)
+            .updateOne({_id:delet(details.cart),'products.item':delet(details.product)},
+            {
+                $inc: { 'products.$.quantity':details.count}
+            }
+            ).then(()=>{
+                resolve()
+            })
         })
     }
 }
