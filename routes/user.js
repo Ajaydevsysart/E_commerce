@@ -111,11 +111,22 @@ router.get('/add-to-cart/:id',(req,res)=>{
 
 //change product quantity
 router.post('/change-product-quantity',(req,res,next)=>{
-    userHelpers.changeProductQuantity(req.body).then(()=>{
+    userHelpers.changeProductQuantity(req.body).then((response)=>{
+        res.json(response)
 
     })
 })
 
+//place order route
+router.get('/place-order',verifyLogin,async(req,res)=>{
+    let total=await userHelpers.getTotalAmount(req.session.user._id)
+    let user=req.session.user
+    let cartCount=null
+    if(req.session.user){
+        cartCount=await userHelpers.getCartCount(req.session.user._id)
+    }
+    res.render('user/place-order',{total,user,cartCount,admin:false})
+})
 
 
 module.exports = router;
