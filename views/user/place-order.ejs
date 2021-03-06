@@ -8,16 +8,20 @@
                     <div>
                         <label for="">Address</label>
 
-                        <input class="form-control" type="text" id="address" name="address">
+                        <input class="form-control" type="text" id="address" name="address" required>
                         
-                        <label for="">PIncode</label>
+                        <label for="">Pincode</label>
 
-                        <input class="form-control" type="text" id="pincode" name="pincode">
+                        <input class="form-control" type="number" id="pincode" name="pincode" required>
+                        
+                        <label for="">Land Mark</label>
+
+                        <input class="form-control" type="text" id="landmark" name="landmark" required>
                         
                         <label for="">Mobile</label>
 
-                        <input class="form-control" type="text" id="mobile" name="mobile">
-                        
+                        <input class="form-control" type="number" id="mobile" name="mobile" required>
+                        <input type="text" name="userId" id="" value="<%=user._id%>" hidden>
                     </div>
 
                 </div>
@@ -28,14 +32,14 @@
                         <div class="payment">
                             <p>Peyment method</p>
                             <label for="" class="radio-inline">
-                                <input type="radio" name="payment-method" value="COD" checkout> COD
+                                <input type="radio" name="payment-method" value="COD" checkout required> COD
                                 
                             </label><br>
                             <label for="" class="radio-inline mt-2">
-                                <input type="radio" name="payment-method" value="ONLINE" checkout> Online Payment
+                                <input type="radio" name="payment-method" value="ONLINE" checkout required> Online Payment
                                 
                             </label><br>
-                            <a href="" style="width: 100%;" class="btn btn-success">Checkout</a>
+                            <button type="submit" class="btn btn-primary float-right">Checkout</button>
 
                         </div>
 
@@ -48,3 +52,19 @@
 
     </div>
 </section>
+<script>
+    $("#checkout-form").submit((e)=>{
+        e.preventDefault()
+        $.ajax({
+            url:'/place-order',
+            method:'post',
+            data:$('#checkout-form').serialize(),
+            success:(response)=>{
+                if(response.status){
+                    location.href='/order-success'
+                }
+            }
+
+        })
+    })
+</script>

@@ -92,12 +92,14 @@ router.get('/logout',(req,res)=>{
 router.get('/cart',verifyLogin,async(req,res)=>{
     let user=req.session.user
     let cartCount=null
+    console.log(req.session.user._id,"in cart ejs")
+    let totalValue=await userHelpers.getTotalAmount(req.session.user._id)
     let products=await userHelpers.getCartProducts(req.session.user._id)
     if(req.session.user){
         cartCount=await userHelpers.getCartCount(req.session.user._id)
     }
     console.log(products)
-    res.render("user/cart",{cartCount,products,user,admin:false})
+    res.render("user/cart",{cartCount,products,user,admin:false,totalValue})
 })
 
 
@@ -111,7 +113,9 @@ router.get('/add-to-cart/:id',(req,res)=>{
 
 //change product quantity
 router.post('/change-product-quantity',(req,res,next)=>{
-    userHelpers.changeProductQuantity(req.body).then((response)=>{
+    userHelpers.changeProductQuantity(req.body).then(async(response)=>{
+        response.total=await userHelpers.getTotalAmount(req.body.user)
+        console.log(req.body.user)
         res.json(response)
 
     })
@@ -126,6 +130,37 @@ router.get('/place-order',verifyLogin,async(req,res)=>{
         cartCount=await userHelpers.getCartCount(req.session.user._id)
     }
     res.render('user/place-order',{total,user,cartCount,admin:false})
+})
+
+//place order
+router.post('/place-order',async(req,res)=>{
+    let products=await userHelpers.getCartProductList(req.body.userId)
+    let totalPrice=await userHelpers.getTotalAmount(req.body.userId)
+    userHelpers.placeOrder(req.body,products,totalPrice).then((response)=>{
+        res.json({status:true})
+    })
+    console.log(req.body);
+})
+
+//oredr succes
+router.get('/order-success',(req,res)=>{
+    let cartCount=null
+    res.render('user/order-success',{cartCount,user:req.session.user,admin:false})
+})
+
+//orders
+router.get('/orders',async(req,res)=>{
+    let cartCount=null
+    let orders=await userHelpers.getUserOrders(req.session.user._id)
+    res.render('user/orders',{user:req.session.user,orders,admin:false,cartCount})
+})
+
+//view order products
+router.get('/view-order-product/:id',async(req,res)=>{
+    let cartCount=null
+    let products=await userHelpers.getOrderProducts(req.params.id)
+    console.log(products,'products')
+    res.render('user/view-order-products',{user:req.session.user,products,admin:false,cartCount})
 })
 
 

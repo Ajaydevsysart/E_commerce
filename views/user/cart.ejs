@@ -7,7 +7,6 @@
                     <th scope="col">Item</th>
                     <th scope="col">Title</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Total Price</th>
                     <th scope="col">Quantity</th>
 
                 </tr>
@@ -26,23 +25,21 @@
                         <td>
                             <%= products[i].product.price%>
                         </td>
-                        <td id="total">
-                            <%= products[i].product.price*products[i].quantity%>
-                        </td>
                         <td>
-                            <button class="cart-item-count mr-3" onclick="changeQuantity('<%=products[i]._id%>','<%=products[i].product._id%>',-1)">-</button>
+                            <button class="cart-item-count mr-3" onclick="changeQuantity('<%=products[i]._id%>','<%=products[i].product._id%>','<%= user._id%>',-1)">-</button>
                             <span id="<%= products[i].product._id%>"><%= products[i].quantity%></span>
-                            <button class="cart-item-count ml-3" onclick="changeQuantity('<%=products[i]._id%>','<%=products[i].product._id%>',1)">+</button>
+                            <button class="cart-item-count ml-3" onclick="changeQuantity('<%=products[i]._id%>','<%=products[i].product._id%>','<%= user._id%>',1)">+</button>
                         </td>
                         <td>
                             <a href="" class="btn btn-danger">Remove</a>
                         </td>
+                        
                     </tr>
                  <%}%>
             </tbody>
         </table>
         <hr>
-            <h3 style="text-align: right;">Total:10000</h3>
+            <h3 style="text-align: right;">Total: <span id="total"><%=totalValue%></span></h3>
             <a href="/place-order" class="float-right btn btn-success">Place order</a>
     </div>
 </section>
@@ -50,13 +47,15 @@
 <!-- quantity changing cart ajax function -->
 
 <script>
-    function changeQuantity(cartId, proId, count) {
+    function changeQuantity(cartId, proId,userId,count) {
         let quantity=parseInt(document.getElementById(proId).innerHTML)
         count=parseInt(count)
-
+        console.log(userId)
         $.ajax({
             url: '/change-product-quantity',
+            
             data: {
+                user:userId,
                 cart: cartId,
                 product: proId,
                 count: count,
@@ -69,7 +68,10 @@
                     alert("Product removed from cart")
                     location.reload()
                 }else{
+                    console.log(response)
                     document.getElementById(proId).innerHTML=quantity+count
+                    document.getElementById('total').innerHTML=response.total
+                     
                 }
 
             }
