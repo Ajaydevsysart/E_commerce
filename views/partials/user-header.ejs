@@ -1,12 +1,157 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<header class="user_header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-3">
+                <a class="navbar-brand" href="/">
+                    <img src="../../public/images/logo/logo.png">
+                </a>
+            </div>
+            <div class="col-6">
+                <div id="custom-search-input">
+                    <div class="input-group">
+                        <input type="text" class="  search-query form-control" placeholder="Search" />
+                        <button class="btn btn-search" type="button">
+                            <span class="material-icons">
+                                search
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 ">
+                    
+                    <div class="navbar-collapse navbar-right">
+                        <ul class="nav navbar-nav ">
+                            <li class="dropdown "><a href="#" class="dropdown-toggle" data-toggle="dropdown">Account
+                                <b class="caret"></b></a>
+                                <ul class="dropdown-menu dropdown_zindex">
+                                    <li>
+                                        <div class="navbar-content">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <img class="user_img" src="/public/images/user/avatar-1.jpg"
+                                                        alt="Alternate Text" class="img-responsive" />
+                                                        <p class="text-center small">
+                                                        <a href="#">Change Photo</a></p>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <span>Bhaumik Patel</span>
+                                                    <p class="text-muted small">
+                                                        mail@gmail.com</p>
+                                                    <div class="divider">
+                                                    </div>
+                                                    <a href="#" class="btn btn-primary btn-sm active">View Profile</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="navbar-footer">
+                                            <div class="navbar-footer-content">
+                                                <div class="row">
+                                                    <div class="col-md-6 text-left">
+                                                        <a href="#" class="btn btn-dark btn-sm text-white">Change Passowrd</a>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <a href="#" class="btn btn-dark btn-sm pull-right text-white">Sign Out</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+    
+                    <ul class="navbar-right">
+                        <li>
+                            <a href="#" id="cart">
+                                <span class="material-icons">
+                                    shopping_cart
+                                </span>
+                                <span class="badge cercle">3</span>
+                            </a>
+                        </li>
+                      </ul> <!--end navbar-right -->
+                     
+                      <a href="#" class="btn-sell  pull-right mr-4">
+                        <span class="material-icons">
+                            recent_actors
+                        </span>
+                        <span class="sell">Sell</span>
+                    </a>
+                      <!-- shopping-cart -->
+                      <div class="shopping-cart">
+                        <div class="shopping-cart-header">
+                          <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
+                          <div class="shopping-cart-total">
+                            <span class="lighter-text">Total:</span>
+                            <span class="main-color-text">$2,229.97</span>
+                          </div>
+                        </div> <!--end shopping-cart-header -->
+                    
+                        <ul class="shopping-cart-items">
+                          <li class="clearfix">
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg" alt="item1" />
+                            <span class="item-name">Sony DSC-RX100M III</span>
+                            <span class="item-price">$849.99</span>
+                            <span class="item-quantity">Quantity: 01</span>
+                          </li>
+                    
+                          <li class="clearfix">
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1" />
+                            <span class="item-name">KS Automatic Mechanic...</span>
+                            <span class="item-price">$1,249.99</span>
+                            <span class="item-quantity">Quantity: 01</span>
+                          </li>
+                    
+                          <li class="clearfix">
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item3.jpg" alt="item1" />
+                            <span class="item-name">Kindle, 6" Glare-Free To...</span>
+                            <span class="item-price">$129.99</span>
+                            <span class="item-quantity">Quantity: 01</span>
+                          </li>
+                        </ul>
+                    
+                        <a href="#" class="btn btn-primary btn-lg col-12">Checkout</a>
+                      </div> <!--end shopping-cart -->
+                
+
+            </div>
+        </div>
+    </div>
+</header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-yellow">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="/">Let's Shop</a>
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+           
+            <div class="row justify-content-md-center col-12">
+                <div class="col-md-auto">
+                
+                    <nav class="header_nav">
+                        <ul class="dropdown">
+                                    <li><a href="#">Breaker</a></li>
+                                    <li><a href="#">Escavator</a></li>
+                                    <li><a href="#">crushing & Screaning Equipments</a></li>
+                                    <li class="drop"><a href="#"><span>Motor</span></a>
+                                        <ul class="sub_menu">
+                                            <li><a href="#">Lorem</a></li>
+                                                    <li><a href="#">Ipsum</a></li>
+                                                    <li><a href="#">Dolor</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Generators</a></li>
+                                    
+                                </ul>
+                        </nav> 
+                </div>
+                </div>
+           
+            
+            
+            <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Products <span class="sr-only">(current)</span></a>
                 </li>
@@ -19,8 +164,8 @@
                     </li>
                     <% } %>
 
-            </ul>
-            <div class="dropdown">
+            </ul> -->
+            <!-- <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
@@ -41,8 +186,10 @@
                             <% } %>
 
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </nav>
-</header>
+
+
+   
