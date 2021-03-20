@@ -4,20 +4,22 @@
     <div class="container mt-5">
       <div class="row">
         <%for (i=0;i<products.length;i++){ %>
+          
   
           <div class="col-md-3 p-3">
             <div class="card" style="width: 15rem;height:25rem">
-              <img class="card-img-top" src="/public/images/product-images/<%=products[i].item%>.jpg" alt="Card image cap"
+              <img class="card-img-top" src="/public/images/product-images/<%= products[i].product._id%>.jpg" alt="Card image cap"
                 style="height:12rem">
               <div class="card-body">
                 <h5 class="card-title">
-                  <b><%= products[i].Name%></b>
+                  <b><%= products[i].product.Name%></b>
                 </h5>
                 <p class="card-text">
-                  <i>Rs <%= products[i].price%></i>
+                  <i>Rs <%= products[i].product.price%></i>
                 </p>
                 <p class="card-text">
-                  <%= products[i].quantity%>  
+                 Quantity:<%= products[i].quantity%>
+                  
                 </p>
                 
                 
@@ -26,6 +28,7 @@
   
           </div>
           <%}%>
+          
   
   
       </div>

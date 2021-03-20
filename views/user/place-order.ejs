@@ -9,15 +9,15 @@
                         <label for="">Address</label>
 
                         <input class="form-control" type="text" id="address" name="address" required>
-                        
+
                         <label for="">Pincode</label>
 
                         <input class="form-control" type="number" id="pincode" name="pincode" required>
-                        
+
                         <label for="">Land Mark</label>
 
                         <input class="form-control" type="text" id="landmark" name="landmark" required>
-                        
+
                         <label for="">Mobile</label>
 
                         <input class="form-control" type="number" id="mobile" name="mobile" required>
@@ -27,17 +27,19 @@
                 </div>
                 <div class="col-md-4">
                     <div class="container mt-5 ml-5 checkout">
-                        <h5>Total Amount: Rs.<%=total%></h5>
+                        <h5>Total Amount: Rs.<%=total%>
+                        </h5>
                         <hr>
                         <div class="payment">
                             <p>Peyment method</p>
                             <label for="" class="radio-inline">
                                 <input type="radio" name="payment-method" value="COD" checkout required> COD
-                                
+
                             </label><br>
                             <label for="" class="radio-inline mt-2">
-                                <input type="radio" name="payment-method" value="ONLINE" checkout required> Online Payment
-                                
+                                <input type="radio" name="payment-method" value="ONLINE" checkout required> Online
+                                Payment
+
                             </label><br>
                             <button type="submit" class="btn btn-primary float-right">Checkout</button>
 
@@ -52,19 +54,64 @@
 
     </div>
 </section>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-    $("#checkout-form").submit((e)=>{
+    $("#checkout-form").submit((e) => {
         e.preventDefault()
         $.ajax({
-            url:'/place-order',
-            method:'post',
-            data:$('#checkout-form').serialize(),
-            success:(response)=>{
-                if(response.status){
-                    location.href='/order-success'
+            url: '/place-order',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                if (response.codSuccess) {
+                    location.href = '/order-success'
+                } else {
+                    razorpayPayment(response)
                 }
             }
 
         })
     })
+
+    function razorpayPayment(order) {
+        var options = {
+            "key": "rzp_test_IvvKkdEC6LDCiP", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "MinesMate",
+            "description": "Test Transaction",
+            "image": "../../public/images/logo/minesmatelogotest.jpg",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                alert(response.razorpay_payment_id);
+                alert(response.razorpay_order_id);
+                alert(response.razorpay_signature);
+
+                verifypayment(response,order)
+            },
+            "prefill": {
+                "name": "Sysart",
+                "email": "Sysart@gmail.com",
+                "contact": "9999999999"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+    function verifypayment(payment,order){
+        $.ajax({
+            url:'/verify-payment',
+            data:{
+                payment,
+                order
+            },
+            method:'post'
+        })
+    }
 </script>

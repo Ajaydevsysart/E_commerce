@@ -3,7 +3,12 @@ const collection = require('../config/collections')
 const bcrypt = require('bcrypt')
 const { response, request } = require('express')
 const delet = require('mongodb').ObjectID;
-const { reject } = require('bcrypt/promises');
+const { reject, promise } = require('bcrypt/promises');
+const Razorpay=require('razorpay')
+var instance=new Razorpay({
+    key_id: 'rzp_test_IvvKkdEC6LDCiP',
+    key_secret:'2Hw3faUWQHGBSJroXvqysTll',
+});
 
 
 module.exports = {
@@ -218,7 +223,7 @@ module.exports = {
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
                 db.get().collection(collection.CART_COLLECTION).removeOne({user:delet(order.userId)})
-                resolve()
+                resolve(response.ops[0]._id)
             })
         })
 
@@ -249,14 +254,14 @@ module.exports = {
                 },
                 {
                     $project:{
-                        items:'$products.items',
+                        item:'$products.item',
                         quantity:'$products.quantity'
                     }
                 },
                 {
                     $lookup:{
                         from:collection.PRODUCT_COLLECTION,
-                        localField:'items',
+                        localField:'item',
                         foreignField:'_id',
                         as:'product'
                     }
@@ -267,8 +272,27 @@ module.exports = {
                     }
                 }
             ]).toArray()
-            console.log(orderItems)
+            console.log(orderItems,'orderitem')
             resolve(orderItems)
+        })
+    },
+    generateRazorpay:(orderId,total)=>{
+        return new Promise((resolve,reject)=>{
+            var options = {
+                amount: total,  // amount in the smallest currency unit
+                currency: "INR",
+                receipt: ""+orderId
+              };
+              instance.orders.create(options, function(err, order) {
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log(order,"new order");
+                    resolve(order)
+                }
+                
+              });
+
         })
     }
 }
