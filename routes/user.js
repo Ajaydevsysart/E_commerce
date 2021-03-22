@@ -84,7 +84,7 @@ router.post('/login',(req,res)=>{
             req.session.user=response.user
             res.redirect('/')
         }else{
-            req.session.loginErr="invalid username or password"
+            req.session.loginErr="Invalid Username or Password"
             res.redirect('/login')
         }
     })
@@ -111,6 +111,23 @@ router.get('/cart',verifyLogin,async(req,res)=>{
     }
     console.log(products)
     res.render("user/cart",{cartCount,products,user,admin:false,totalValue})
+})
+//cart empty =======================================
+
+router.get('/cartempty',verifyLogin,async(req,res)=>{
+    let user=req.session.user
+    let cartCount=null
+    console.log(req.session.user._id,"in cart ejs")
+    res.render("user/emptycart",{cartCount,user,admin:false})
+})
+
+//sell product =======================================
+
+router.get('/sellproduct',verifyLogin,async(req,res)=>{
+    let user=req.session.user
+    let cartCount=null
+    console.log(req.session.user._id,"in cart ejs")
+    res.render("user/sellproduct",{cartCount,user,admin:false})
 })
 
 

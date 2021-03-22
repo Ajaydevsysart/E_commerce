@@ -711,3 +711,12 @@ address, dl, fieldset, figure, ol, p, pre, ul {
 .small-container .show-small-img:last-of-type{
   margin-right: 0;
 }
+.cartemp{
+  text-align: center;
+}
+.cartempadd{
+  text-align: center;
+}
+.active{
+  text-align: center;
+}
