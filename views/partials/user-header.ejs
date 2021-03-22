@@ -32,15 +32,32 @@
                                                     <img class="user_img" src="/public/images/user/avatar-1.jpg"
                                                         alt="Alternate Text" class="img-responsive" />
                                                         <p class="text-center small">
-                                                        <a href="#">Change Photo</a></p>
+                                                        <!-- <a href="#">Change Photo</a></p> -->
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <span>Bhaumik Patel</span>
+                                                    <span>
+                                                        
+                                                <% if (user) {%>
+
+                                                    <%=user.Name%>
+                                                        <% } else {%>
+                                                            Account
+                                                <% } %>
+                                                    </span>
                                                     <p class="text-muted small">
-                                                        mail@gmail.com</p>
+                                                        <% if (user) {%>
+                                                            <%=user.Email%></p>
+                                                            <% } else {%>
+
+                                                        <% } %>
                                                     <div class="divider">
                                                     </div>
+                                                    <% if (user) {%>
+
                                                     <a href="#" class="btn btn-primary mt-3 btn-sm active">View Profile</a>
+                                                    <% } else {%>
+
+                                                        <% } %> 
                                                 </div>
                                             </div>
                                         </div>
@@ -48,11 +65,17 @@
                                             <div class="navbar-footer-content">
                                                 <div class="row">
                                                     <div class="col-md-6 text-left">
-                                                        <a href="#" class="btn btn-dark btn-sm text-white">Change Passowrd</a>
+                                                        <!-- <a href="#" class="btn btn-dark btn-sm text-white">Change Passowrd</a> -->
                                                     </div>
-                                                    <div class="col-md-6 text-right">
-                                                        <a href="#" class="btn btn-dark btn-sm pull-right text-white">Sign Out</a>
-                                                    </div>
+                                                    <% if (user) {%>
+                                                        <div class="col-md-6 text-right">
+                                                            <a href="/logout" class="btn btn-dark btn-sm pull-right text-white">LogOut</a>
+                                                        </div>
+                                                    <% } else {%>
+                                                        <div class="col-md-6 text-right">
+                                                            <a href="/login" class="btn btn-dark btn-sm pull-right text-white">Login</a>
+                                                        </div>
+                                                    <% } %>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,21 +87,25 @@
     
                     <ul class="navbar-right">
                         <li>
-                            <a href="#" id="cart">
-                                <span class="material-icons">
-                                    shopping_cart
-                                </span>
-                                <span class="badge cercle">3</span>
-                            </a>
+                            
+                            
+                                <a href="/cart" ><span class="material-icons">shopping_cart</span>
+                                    <span class="badge cercle" id="cart-count"><%= cartCount%></span>
+                                </a>
+                          
                         </li>
                       </ul> <!--end navbar-right -->
-                     
-                      <a href="#" class="btn-sell  pull-right mr-4">
+                      <% if (user) {%>
+                      <a href="sellproduct" class="btn-sell  pull-right mr-4">
+                        <% } else {%>
+                            <a href="/login" class="btn-sell  pull-right mr-4">
+                                <% } %>
                         <span class="material-icons">
                             recent_actors
                         </span>
+                        
                         <span class="sell">Sell</span>
-                    </a>
+                        </a>
                       <!-- shopping-cart -->
                       <div class="shopping-cart">
                         <div class="shopping-cart-header">
@@ -138,55 +165,17 @@
                                     <li class="drop"><a href="#"><span>Motor</span></a>
                                         <ul class="sub_menu">
                                             <li><a href="#">Lorem</a></li>
-                                                    <li><a href="#">Ipsum</a></li>
-                                                    <li><a href="#">Dolor</a></li>
+                                            <li><a href="#">Ipsum</a></li>
+                                            <li><a href="#">Dolor</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="#">Generators</a></li>
                                     
-                                </ul>
-                        </nav> 
+                        </ul>
+                    </nav> 
                 </div>
-                </div>
-           
-            
-            
-            <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Products <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart">Cart<span class="badge badge-success" id="cart-count"><%= cartCount%></span></a>
-                </li>
-                <% if (user) {%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Orders</a>
-                    </li>
-                    <% } %>
-
-            </ul> -->
-            <!-- <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                    <% if (user) {%>
-
-                        <%=user.Name%>
-                            <% } else {%>
-                                Account
-                                <% } %>
-                </button>
-                <div style="width:100%;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                    <% if (user) {%>
-
-                        <a style="width:50rem;" class="dropdown-item" href="/logout">Logout</a>
-                        <% } else {%>
-                            <a style="width:50rem;" class="dropdown-item" href="/login">Login</a>
-                            <% } %>
-
-                </div>
-            </div> -->
+            </div>
+        
 
         </div>
     </nav>
