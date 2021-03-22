@@ -27,7 +27,18 @@ router.get('/', async(req, res) => {
         
     })
 });
-
+//product detail=================================
+router.get('/product-details', async(req, res) => {
+    let user=req.session.user
+    let cartCount=null
+    if(req.session.user){
+    cartCount=await userHelpers.getCartCount(req.session.user._id)
+    }
+    producthelper.getAllProducts().then((products) => {
+        res.render("user/product-details/product-detail", {products,cartCount,user,admin: false })
+        
+    })
+});
 //login get===================================
 
 router.get('/login',(req,res)=>{
