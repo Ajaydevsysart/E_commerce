@@ -234,7 +234,6 @@ router.post('/place-order',async(req,res)=>{
     let products=await userHelpers.getCartProductList(req.body.userId)
     let totalPrice=await userHelpers.getTotalAmount(req.body.userId)
     userHelpers.placeOrder(req.body,products,totalPrice).then((orderId)=>{
-    console.log(orderId,"orderid");
         if(req.body['payment-method']==='COD'){
             res.json({codSuccess:true})
         }else{
@@ -242,7 +241,6 @@ router.post('/place-order',async(req,res)=>{
                 res.json(response)
             })
         }
-        
     })
     console.log(req.body);
 })
