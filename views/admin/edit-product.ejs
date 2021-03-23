@@ -6,8 +6,17 @@
                 <form action="/admin/edit-product/<%= product._id%>" method="POST" enctype="multipart/form-data">
                     <label for="">Name</label>
                     <input type="text" name="Name" class="form-control" value="<%= product.Name%>">
+                    <!-- <label for="">Catagory</label>
+                    <input type="text" name="category" class="form-control" value="<%= product.catagory%>"> -->
                     <label for="">Catagory</label>
-                    <input type="text" name="category" class="form-control" value="<%= product.catagory%>">
+                    <select class="form-control" aria-label=".form-select-lg example"   name="catagory" required>
+                        <option value="<%= product.catagory%>"><%= product.catagory%></option>
+                        <option value="crushing&Screaning">Crushing & Screaning</option>
+                        <option value="Escavators">Escavators</option>
+                        <option value="Motor">Motor</option>
+                        <option value="Generators">Generators</option>
+                        <option value="Breaker">Breaker</option>
+                      </select>
 
                     <label for="">Price</label>
                     <input type="text" name="price" class="form-control" value="<%= product.price%>">

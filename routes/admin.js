@@ -19,6 +19,7 @@ router.post('/add-product', (req, res) => {
         let image=req.files.image
         image.mv('./public/images/product-images/'+id+'.jpg',(err,done)=>{
             if(!err){
+                req.flash('success_msg', 'You are now registered and can log in');
                 res.render('admin/add-product',{admin:true})
             }else{
               console.log(err)  

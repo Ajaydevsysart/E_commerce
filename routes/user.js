@@ -111,6 +111,7 @@ router.get('/cart',verifyLogin,async(req,res)=>{
     }
     console.log(products)
     res.render("user/cart",{cartCount,products,user,admin:false,totalValue})
+    
 })
 //cart empty =======================================
 
@@ -121,11 +122,79 @@ router.get('/cartempty',verifyLogin,async(req,res)=>{
     res.render("user/emptycart",{cartCount,user,admin:false})
 })
 
+//Escavators =======================================
+
+router.get('/escavators',async(req,res)=>{
+    let user=req.session.user
+    let cartCount=null
+    if(req.session.user){
+        cartCount=await userHelpers.getCartCount(req.session.user._id)
+    }
+    producthelper.getAllProducts().then((products) => {
+    res.render("user/category/escavators",{cartCount,products,user,admin:false})
+    })
+});
+
+// //Breaker =======================================
+
+router.get('/breaker',async(req,res)=>{
+    let user=req.session.user
+    let cartCount=null
+    if(req.session.user){
+        cartCount=await userHelpers.getCartCount(req.session.user._id)
+    }
+    producthelper.getAllProducts().then((products) => {
+    res.render("user/category/breaker",{cartCount,products,user,admin:false})
+    })
+})
+
+// //Generators =======================================
+
+router.get('/generators',async(req,res)=>{
+    let user=req.session.user
+    let cartCount=null
+    if(req.session.user){
+        cartCount=await userHelpers.getCartCount(req.session.user._id)
+    }
+    producthelper.getAllProducts().then((products) => {
+    res.render("user/category/generators",{cartCount,products,user,admin:false})
+    })
+})
+
+// //crushing&Screaning =======================================
+
+router.get('/crushing',async(req,res)=>{
+    let user=req.session.user
+    let cartCount=null
+    if(req.session.user){
+        cartCount=await userHelpers.getCartCount(req.session.user._id)
+    }
+    producthelper.getAllProducts().then((products) => {
+    res.render("user/category/crushing",{cartCount,products,user,admin:false})
+    })
+})
+
+// //Motor =======================================
+
+router.get('/motor',async(req,res)=>{
+    let user=req.session.user
+    let cartCount=null
+    if(req.session.user){
+        cartCount=await userHelpers.getCartCount(req.session.user._id)
+    }
+    producthelper.getAllProducts().then((products) => {
+    res.render("user/category/motor",{cartCount,products,user,admin:false})
+    })
+})
+
 //sell product =======================================
 
 router.get('/sellproduct',verifyLogin,async(req,res)=>{
     let user=req.session.user
     let cartCount=null
+    if(req.session.user){
+        cartCount=await userHelpers.getCartCount(req.session.user._id)
+    }
     console.log(req.session.user._id,"in cart ejs")
     res.render("user/sellproduct",{cartCount,user,admin:false})
 })
@@ -164,8 +233,16 @@ router.get('/place-order',verifyLogin,async(req,res)=>{
 router.post('/place-order',async(req,res)=>{
     let products=await userHelpers.getCartProductList(req.body.userId)
     let totalPrice=await userHelpers.getTotalAmount(req.body.userId)
-    userHelpers.placeOrder(req.body,products,totalPrice).then((response)=>{
-        res.json({status:true})
+    userHelpers.placeOrder(req.body,products,totalPrice).then((orderId)=>{
+    console.log(orderId,"orderid");
+        if(req.body['payment-method']==='COD'){
+            res.json({codSuccess:true})
+        }else{
+            userHelpers.generateRazorpay(orderId,totalPrice).then((response)=>{
+                res.json(response)
+            })
+        }
+        
     })
     console.log(req.body);
 })

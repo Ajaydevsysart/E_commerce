@@ -3,6 +3,7 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const upload=require('express-fileupload')
 csvtojson = require("csvtojson");
+const flash = require('connect-flash');
 const db=require('./config/connection')
 const session=require('express-session')
 
@@ -26,6 +27,9 @@ app.get("/layouts/", function(req, res) {
 //session handle
 
 app.use(session({secret:"Key",cookie:{maxAge:600000}}))
+
+// Connect Flash for flash messages
+app.use(flash());
 
 
 
